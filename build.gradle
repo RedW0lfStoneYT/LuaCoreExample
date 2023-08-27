@@ -1,19 +1,62 @@
 plugins {
     id 'java'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'net.minecrell.plugin-yml.bukkit' version '0.5.3'
 }
 
-group 'dev.selena'
+group 'dev.selena.test'
 version '1.0-SNAPSHOT'
+
+defaultTasks('build')
 
 repositories {
     mavenCentral()
+    mavenLocal()
+    maven {
+        url = uri("https://repo.papermc.io/repository/maven-public/")
+    }
+    maven {
+        name "selenaRepos"
+        url "https://repo.selenadevelopment.com/releases"
+    }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
+    compileOnly 'org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT'
+    implementation "dev.selena.lua:LuaCore:1.0-SNAPSHOT"
 }
 
-test {
-    useJUnitPlatform()
+build {
+    dependsOn shadowJar
+}
+
+shadowJar {
+    dependsOn(jar)
+    if (System.getenv("BUILD_NUMBER") == null) {
+        archiveName = rootProject.name + "-" + version + ".jar"
+    } else {
+        archiveName = rootProject.name + "-" + version + "-b" + System.getenv("BUILD_NUMBER") + ".jar"
+    }
+
+    dependencies {
+        include(dependency('dev.selena.lua:LuaCore'))
+    }
+    relocate "dev.selena.lua.", "dev.selena.libs"
+
+    zip64 true
+    subprojects.each { subproject ->
+        from subproject.sourceSets.main.output.classesDirs
+        from subproject.sourceSets.main.output.resourcesDir
+    }
+
+    configurations = [project.configurations.getByName("runtimeClasspath")]
+}
+
+bukkit {
+    main = "dev.selena.tests.LuaTest"
+    authors = ["Selena"]
+    version = 1.1
+    apiVersion = "1.20"
+
 }

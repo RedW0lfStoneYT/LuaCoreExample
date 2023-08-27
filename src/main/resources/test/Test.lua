@@ -6,3 +6,11 @@
 Test_String = "ABC"
 Test_Boolean = true
 Test_Int = 5
+
+
+
+return {
+    Test_String = Test_String,
+    Test_Boolean = Test_Boolean,
+    Test_Int = Test_Int
+}
