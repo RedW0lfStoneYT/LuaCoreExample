@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'dev.selena.test'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 defaultTasks('build')
 
@@ -24,7 +24,7 @@ repositories {
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly 'org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT'
-    implementation "dev.selena.lua:LuaCore:1.0-SNAPSHOT"
+    implementation "dev.selena.lua:LuaCore:1.0.6-DEV-1"
 }
 
 build {
@@ -57,6 +57,5 @@ bukkit {
     main = "dev.selena.tests.LuaTest"
     authors = ["Selena"]
     version = 1.1
-    apiVersion = "1.20"
 
 }

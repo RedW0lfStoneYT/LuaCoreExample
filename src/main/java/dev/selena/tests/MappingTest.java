@@ -1,16 +1,24 @@
 package dev.selena.tests;
 
+import dev.selena.libs.gson.annotations.Expose;
 import dev.selena.luacore.LuaCore;
 import dev.selena.luacore.utils.RandomCollection;
 import dev.selena.luacore.utils.items.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 
 public class MappingTest {
 
+    @Expose
     public String Test_String = "123";
+    @Expose
     public boolean Test_Boolean = false;
+    @Expose
     public int Test_Int = 1;
+    @Expose
+    public World Test_World = Bukkit.getWorld("world_the_end");
 
     public ItemStack test = new ItemBuilder(Material.STONE)
             .addCustomNBT("MapperClass", this) // You can store any value using addCustomNBT
