@@ -16,15 +16,22 @@ repositories {
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
     maven {
-        name "selenaRepos"
+        name "Release"
         url "https://repo.selenadevelopment.com/releases"
+    }
+    maven {
+        name "Snapshots"
+        url "https://repo.selenadevelopment.com/snapshots"
     }
 }
 
 dependencies {
     compileOnly("io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT")
     compileOnly 'org.spigotmc:spigot:1.20.1-R0.1-SNAPSHOT'
-    implementation "dev.selena.lua:LuaCore:1.0.6-DEV-1"
+    implementation "dev.selena.lua:LuaCore:1.0.9-SNAPSHOT"
+    compileOnly 'org.projectlombok:lombok:1.18.30'
+    annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
 }
 
 build {

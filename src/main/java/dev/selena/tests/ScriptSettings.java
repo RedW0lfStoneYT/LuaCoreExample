@@ -1,5 +1,6 @@
 package dev.selena.tests;
 
+import dev.selena.luacore.exceptions.lua.NoReturnValueException;
 import dev.selena.luacore.utils.config.FileManager;
 import dev.selena.luacore.utils.lua.LuaValueMapper;
 
@@ -21,7 +22,11 @@ public enum ScriptSettings {
 
     @SuppressWarnings("unchecked")
     public <T> T getScriptValues() {
-        return (T) LuaValueMapper.mapToClass(clazz, file.getPath());
+        try {
+            return (T) LuaValueMapper.mapToClass(clazz, file.getPath());
+        } catch (NoReturnValueException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
